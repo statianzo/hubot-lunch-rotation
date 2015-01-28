@@ -1,7 +1,7 @@
 {
   "name": "hubot-lunch-rotation",
   "description": "Rotate lunches by individual weekly",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Jason Staten <jstaten07@gmail.com>",
   "contributors": [],
   "license": "BSD",
