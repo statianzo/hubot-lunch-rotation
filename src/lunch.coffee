@@ -23,7 +23,7 @@
   isEmpty
   isNil
   join
-  map
+  mapIndexed
   propEq
   reject
   remove
@@ -34,9 +34,8 @@ moment = require('moment')()
 
 noEntries = "No choices have been made. You will go hungry."
 resetReply = "As you wish. All lunches have been removed."
-formatEntry = (e) -> "#{e.choice} (#{e.user})"
-formatThisWeek = (e) -> "This week #{e.user} chose (#{e.choice})!"
-formatThisWeek = (e) -> "This week #{e.user} chose (#{e.choice})!"
+formatEntry = (e, i) -> "#{i+1}. #{e.choice} - #{e.user}"
+formatThisWeek = (e) -> "This week #{e.user} chose #{e.choice}!"
 compact = reject(isNil)
 
 lunch = (robot) ->
@@ -108,6 +107,6 @@ lunch.unset = (lunches, user) ->
 lunch.rotate = (list) ->
   compact(append(head(list), tail(list)))
 
-lunch.queue = compose(join("\n"), map(formatEntry))
+lunch.queue = compose(join("\n"), mapIndexed(formatEntry))
 
 module.exports = lunch

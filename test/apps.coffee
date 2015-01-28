@@ -43,7 +43,7 @@ module.exports =
 
   queue:
     "Lists queue of upcoming": (test) ->
-      expected = "B (A)\nD (C)"
+      expected = "1. B - A\n2. D - C"
       res = lunch.queue([{user: 'A', choice: 'B'}, {user: 'C', choice:'D'}])
       test.equal(res, expected)
       test.done()
