@@ -30,7 +30,7 @@
   tail
 } = require('ramda')
 
-moment = require('moment')()
+moment = require('moment')
 
 noEntries = "No choices have been made. You will go hungry."
 resetReply = "As you wish. All lunches have been removed."
@@ -40,15 +40,16 @@ compact = reject(isNil)
 
 lunch = (robot) ->
   load = ->
-     robot.brain.get('lunch') || {latestWeek: moment.isoWeek(), choices: []}
+     robot.brain.get('lunch') || {latestWeek: moment().isoWeek(), choices: []}
   save = (lunchData) ->
      robot.brain.set('lunch', lunchData)
 
   entryOfWeek = (lunchData) ->
-    week = moment.isoWeek()
+    week = moment().isoWeek()
     if lunchData.latestWeek != week
+      lunchData.latestWeek = week
       lunchData.choices = lunch.rotate(lunchData.choices)
-      save()
+      save(lunchData)
     head(lunchData.choices)
 
   robot.respond /lunch$/i, (msg) ->
