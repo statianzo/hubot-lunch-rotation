@@ -88,6 +88,30 @@ lunch = (robot) ->
     save(null)
     msg.send resetReply
 
+  if process.env.LUNCH_DEBUG
+    robot.respond /lunch debug data/i, (msg) ->
+      lunchData = load()
+      msg.send JSON.stringify(lunchData);
+
+    robot.respond /lunch debug set week (\d+)/i, (msg) ->
+      lunchData = load()
+      lunchData.latestWeek = parseInt(msg.match[1])
+      save(lunchData)
+      msg.send JSON.stringify(lunchData);
+
+    robot.respond /lunch debug date/i, (msg) ->
+      lunchData = load()
+      msg.send JSON.stringify
+        latestWeek: lunchData.latestWeek,
+        moment: moment(),
+        isoWeek: moment().isoWeek()
+
+    robot.respond /lunch debug rotate/i, (msg) ->
+      lunchData = load()
+      lunchData.choices = lunch.rotate(lunchData.choices)
+      save(lunchData)
+      msg.send JSON.stringify(lunchData);
+
 
 
 lunch.set = (lunches, user, choice) ->
