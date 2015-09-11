@@ -112,6 +112,13 @@ lunch = (robot) ->
       save(lunchData)
       msg.send JSON.stringify(lunchData);
 
+    robot.respond /lunch debug remove (.*)/i, (msg) ->
+      user = msg.match[1].trim().toLowerCase()
+      lunchData = load()
+      lunchData.choices = lunch.unset(lunchData.choices, user)
+      save(lunchData)
+      msg.send JSON.stringify(lunchData);
+
 
 
 lunch.set = (lunches, user, choice) ->
